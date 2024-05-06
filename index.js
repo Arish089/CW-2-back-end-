@@ -12,6 +12,10 @@ const port = process.env.PORT
 
 app.use(cors())
 app.use(express.json())
+
+app.get('/', (req, res)=>{
+    res.send("welcome")
+})
 app.use('/product', productRouter)
 app.use('/cart', CartProductRouter)
 app.use('/address', AddressRouter)
