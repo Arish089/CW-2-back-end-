@@ -4,6 +4,8 @@ const productRouter = require('./routes/products.routes');
 const CartProductRouter = require('./routes/cart.routes');
 const cors = require('cors');
 const AddressRouter = require('./routes/address.routes');
+const OrderModel = require('./models/order.model');
+const OrderRouter = require('./routes/order.routes');
 const app = express();
 
 require('dotenv').config()
@@ -16,6 +18,7 @@ app.use(express.json())
 app.get('/', (req, res)=>{
     res.send("welcome")
 })
+app.use('/order', OrderRouter)
 app.use('/product', productRouter)
 app.use('/cart', CartProductRouter)
 app.use('/address', AddressRouter)
