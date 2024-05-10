@@ -16,10 +16,10 @@ CartProductRouter.get('/', async(req, res)=>{
 
 CartProductRouter.post('/addToCart', async(req, res)=>{
     const cartProducts = req.body;
-    console.log(cartProducts);
+   // console.log(cartProducts);
     try {
         const duplicateProd = await CartProductModel.findOne({_id:cartProducts._id})
-        console.log(duplicateProd);
+      //  console.log(duplicateProd);
         
             if(duplicateProd === null){
                 const products = await CartProductModel.create(cartProducts)
@@ -45,7 +45,7 @@ CartProductRouter.delete('/delete/:id', async(req, res)=>{
             await CartProductModel.deleteOne({_id:id})
         return res.status(200).send({message:"Product removed successfully"})
         }
-        console.log(resp);
+      //  console.log(resp);
         await CartProductModel.updateOne({_id:id}, { $inc: { count: -1 } });
         return res.status(200).send({message:"Product removed successfully"})   
     }else{
@@ -72,6 +72,7 @@ CartProductRouter.patch('/update/:id', async(req, res)=>{
         return res.status(500).send("Error while updating the product",error)
     }
 })
+
 CartProductRouter.delete('/remove/:id', async(req, res)=>{
     const {id} = req.params;
     try {
@@ -86,6 +87,17 @@ CartProductRouter.delete('/remove/:id', async(req, res)=>{
     }
     } catch (error) {
         return res.status(500).send("Error while removing the product",error)
+    }
+})
+
+CartProductRouter.delete('/clearCart', async(req, res)=>{
+    try {
+    await CartProductModel.deleteMany({})
+    return res.status(200).send({message:"Product removed successfully"})
+
+    } catch (error) {
+        console.log("Error while clearing the cart: ",error);
+        return res.status(500).json({error: "Internal server error"})
     }
 })
 module.exports = CartProductRouter;

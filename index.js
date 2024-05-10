@@ -3,7 +3,6 @@ const DbConnection = require('./config/db');
 const productRouter = require('./routes/products.routes');
 const CartProductRouter = require('./routes/cart.routes');
 const cors = require('cors');
-const AddressRouter = require('./routes/address.routes');
 const OrderModel = require('./models/order.model');
 const OrderRouter = require('./routes/order.routes');
 const app = express();
@@ -14,6 +13,7 @@ const port = process.env.PORT
 
 app.use(cors())
 app.use(express.json())
+app.use(express.urlencoded({extended:false}))
 
 app.get('/', (req, res)=>{
     res.send("welcome")
@@ -21,7 +21,7 @@ app.get('/', (req, res)=>{
 app.use('/order', OrderRouter)
 app.use('/product', productRouter)
 app.use('/cart', CartProductRouter)
-app.use('/address', AddressRouter)
+
 
 app.listen(port, ()=>{
     DbConnection(process.env.DB_URL)
