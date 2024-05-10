@@ -61,14 +61,14 @@ OrderRouter.post('/payment-verification', async(req, res)=>{
                     razorpay_order_id: razorpay_order_id, razorpay_payment_id: razorpay_payment_id, razorpay_signature: razorpay_signature
                 }
             })
-            res.redirect(`https://main--tata-1mgs.netlify.app/success?payment_id=${razorpay_payment_id}`)
+            res.redirect(`/success?payment_id=${razorpay_payment_id}`)
             return
         } catch (error) {
             console.log(error);
             res.json({error:error.msg})
         }
     }else{
-        res.redirect('https://main--tata-1mgs.netlify.app/failed')
+        res.redirect('/failed')
         return
     }
 })
